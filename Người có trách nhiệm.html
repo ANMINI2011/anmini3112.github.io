@@ -1,0 +1,401 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Người có trách nhiệm</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Playfair+Display:wght@600..800&display=swap">
+<style>
+/* Bố cục: chuỗi 9 "cảnh" cao gần bằng màn hình. Khi cuộn qua, nội dung cảnh cũ mờ dần, nhòe và thu nhỏ trong lúc cảnh mới trôi lên. */
+:root {
+  --bg: #0C162B;
+  --bg-2: #101D3A;
+  --surface: #16264A;
+  --surface-2: #1D3262;
+  --line: #2A3C66;
+  --cream: #FBF7F0;
+  --muted: #B9C4D9;
+  --amber: #F2A541;
+  --teal: #5CCDBF;
+  --coral: #F0907A;
+  --navy: #14213D;
+  --display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --body: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.1; text-wrap: balance; }
+h1 { font-size: clamp(3rem, 10vw, 8rem); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: clamp(2rem, 5.2vw, 3.75rem); font-weight: 700; }
+h3 { font-size: 1.5rem; font-weight: 700; line-height: 1.25; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+
+/* Cảnh */
+.scene {
+  position: relative;
+  min-height: 90vh;
+  min-height: 90svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--bg);
+}
+.scene.alt { background: var(--bg-2); }
+.scene.hot { background: var(--amber); color: var(--navy); }
+.wrap {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  box-sizing: border-box;
+  padding-block: 5rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  will-change: transform, opacity;
+}
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1.25rem;
+}
+.hot .eyebrow { color: var(--navy); }
+.lead { font-size: clamp(1.25rem, 2.4vw, 1.75rem); line-height: 1.45; color: var(--muted); max-width: 30em; }
+.muted { color: var(--muted); }
+
+/* 1. Mở đầu */
+.hero {
+  margin-top: calc(-1 * env(safe-area-inset-top, 0px));
+  min-height: 92vh;
+  min-height: 92svh;
+  background:
+    radial-gradient(60% 55% at 80% 25%, rgba(242, 165, 65, 0.34), rgba(242, 165, 65, 0) 70%),
+    radial-gradient(50% 50% at 15% 85%, rgba(92, 205, 191, 0.26), rgba(92, 205, 191, 0) 70%),
+    var(--bg);
+}
+.hero .wrap { padding-top: calc(env(safe-area-inset-top, 0px) + 4rem); }
+.hero h1 { margin-bottom: 1.75rem; }
+.byline { margin-top: 2.5rem; font-size: 1rem; color: var(--muted); }
+.cue { margin-top: 3.5rem; display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; color: var(--muted); letter-spacing: 0.08em; }
+.cue svg { animation: bob 1.8s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .cue svg { animation: none; } }
+
+/* 2. Khái niệm */
+.def { font-family: var(--display); font-size: clamp(1.6rem, 3.6vw, 2.75rem); line-height: 1.3; max-width: 24em; margin: 2rem 0 3.5rem; font-weight: 600; }
+.def em { font-style: normal; color: var(--amber); }
+.facets { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem; }
+.facets li { border-top: 1px solid var(--line); padding-top: 1.25rem; min-width: 0; }
+.facets h3 { margin-bottom: 0.5rem; }
+.facets p { color: var(--muted); font-size: 1rem; }
+
+/* 3. Bốn mối quan hệ */
+.split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 3rem 4rem; align-items: center; margin-top: 3rem; }
+.rels { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.75rem; }
+.rels li { display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 1rem; align-items: start; }
+.rels .sw { width: 1.25rem; height: 1.25rem; border-radius: 50%; margin-top: 0.3rem; border: 1px solid var(--teal); box-sizing: border-box; }
+.rels h3 { margin-bottom: 0.25rem; }
+.rels p { color: var(--muted); font-size: 1rem; }
+.rings { width: 100%; max-width: 420px; height: auto; justify-self: center; }
+.rings text { font-family: var(--body); font-size: 15px; font-weight: 600; text-anchor: middle; fill: var(--cream); }
+.rings .c { fill: var(--navy); font-size: 17px; }
+
+/* 4. Sáu việc làm */
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+.card { background: var(--surface); border-radius: 14px; padding: 1.75rem; }
+.card h3 { font-size: 1.375rem; margin-bottom: 0.5rem; }
+.card p { color: var(--muted); font-size: 1rem; }
+
+/* 5. Tình huống */
+.cases { display: grid; gap: 1rem; margin-top: 3rem; }
+.case { background: var(--surface); border-radius: 14px; padding: 1.5rem 1.75rem; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+.tag { display: block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; color: var(--muted); }
+.good .tag { color: var(--teal); }
+.bad .tag { color: var(--coral); }
+.case p { font-size: 1.0625rem; }
+.case .sit p { font-family: var(--display); font-size: 1.25rem; font-weight: 700; line-height: 1.3; }
+
+/* 6. Ý nghĩa */
+.why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin-top: 3rem; }
+.why > div { border-left: 1px solid var(--line); padding-left: 1.5rem; min-width: 0; }
+.why h3 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 0.75rem; }
+.why p { color: var(--muted); }
+
+/* 7. Thông điệp */
+.stmt { font-size: clamp(2.5rem, 8vw, 6.5rem); font-weight: 800; letter-spacing: -0.01em; max-width: 12em; }
+.stmt-sub { margin-top: 2rem; font-size: clamp(1.25rem, 2.6vw, 1.875rem); line-height: 1.4; max-width: 26em; }
+
+/* 8. Tự kiểm tra */
+.checks { list-style: none; margin: 3rem 0 0; padding: 0; display: grid; gap: 0.75rem; max-width: 52rem; }
+.check { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--surface); border-radius: 12px; cursor: pointer; font-size: 1.125rem; line-height: 1.45; }
+.check:has(input:checked) { background: var(--surface-2); }
+.check input { width: 1.5rem; height: 1.5rem; flex: none; accent-color: var(--amber); cursor: pointer; margin: 0; }
+.meter { display: flex; gap: 0.5rem; margin-top: 2rem; max-width: 52rem; }
+.meter span { flex: 1; height: 8px; border-radius: 4px; background: var(--line); }
+.meter span.on { background: var(--amber); }
+.status { margin-top: 1rem; color: var(--muted); font-size: 1rem; min-height: 3.2em; max-width: 52rem; }
+
+/* 9. Kết luận */
+.end-title { font-size: clamp(2.5rem, 8vw, 6.5rem); font-weight: 800; letter-spacing: -0.01em; max-width: 11em; margin: 1.5rem 0 2.5rem; }
+.ask { margin-top: 3rem; max-width: 32em; }
+.ask p:last-child { font-family: var(--display); font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.3; font-weight: 600; }
+.btn { font: inherit; font-size: 1rem; color: var(--cream); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 0.75rem 1.5rem; cursor: pointer; margin-top: 3rem; }
+.btn:hover { background: var(--surface); }
+
+/* Thanh tiến độ và nhãn phần */
+.bar { position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); height: 3px; background: var(--amber); transform: scaleX(0); transform-origin: 0 50%; z-index: 20; pointer-events: none; }
+.chip { position: fixed; left: max(16px, env(safe-area-inset-left, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 20; background: rgba(12, 22, 43, 0.78); color: var(--cream); border: 1px solid var(--line); border-radius: 999px; padding: 0.4rem 0.9rem; font-size: 0.8125rem; font-variant-numeric: tabular-nums; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); pointer-events: none; }
+.chip b { font-weight: 600; margin-right: 0.5rem; }
+
+@media (max-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .why { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+}
+@media (max-width: 760px) {
+  .case { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+}
+@media (max-width: 560px) {
+  .cards { grid-template-columns: minmax(0, 1fr); }
+  .wrap { padding-block: 3.5rem; }
+}
+</style>
+
+<div class="bar" id="bar"></div>
+<div class="chip" aria-hidden="true"><b id="count">1/9</b><span id="name">Mở đầu</span></div>
+
+<main>
+  <section class="scene hero" data-name="Mở đầu">
+    <div class="wrap">
+      <p class="eyebrow">Chủ đề: Rèn luyện bản thân</p>
+      <h1>Rèn luyện bản thân</h1>
+      <p class="lead">Hoạt động 1: Tìm hiểu biểu hiện của người có trách nhiệm</p>
+      <p class="byline">Tổ 1 · Lớp 10A16</p>
+      <div class="cue">
+        <svg width="18" height="24" viewBox="0 0 18 24" aria-hidden="true"><path d="M9 2v18M2 13l7 7 7-7" fill="none" stroke="#B9C4D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Cuộn xuống
+      </div>
+    </div>
+  </section>
+
+  <section class="scene alt" data-name="Khái niệm">
+    <div class="wrap">
+      <p class="eyebrow">Khởi động</p>
+      <h2>Trách nhiệm là gì?</h2>
+      <p class="def">Trách nhiệm là <em>ý thức làm tốt phần việc của mình</em> và <em>dám chịu trách nhiệm</em> về lời nói, hành động cùng kết quả do mình tạo ra.</p>
+      <ul class="facets">
+        <li><h3>Ý thức tự giác</h3><p>Tự nhận ra việc mình cần làm mà không chờ nhắc nhở.</p></li>
+        <li><h3>Làm tròn phần việc</h3><p>Hoàn thành nhiệm vụ được giao một cách nghiêm túc.</p></li>
+        <li><h3>Dám chịu trách nhiệm</h3><p>Nhận hậu quả về hành động của mình và tìm cách sửa chữa.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="scene" data-name="Bốn mối quan hệ">
+    <div class="wrap">
+      <p class="eyebrow">Biểu hiện</p>
+      <h2>Trách nhiệm trong bốn mối quan hệ</h2>
+      <div class="split">
+        <ul class="rels">
+          <li><span class="sw" style="background:#F2A541;border-color:#F2A541" aria-hidden="true"></span><div><h3>Với bản thân</h3><p>Tự giác học tập, giữ gìn sức khỏe, dám nhận lỗi và sửa chữa.</p></div></li>
+          <li><span class="sw" style="background:rgba(92,205,191,0.38)" aria-hidden="true"></span><div><h3>Với gia đình</h3><p>Phụ giúp việc nhà, quan tâm ông bà, cha mẹ và giữ lời hứa.</p></div></li>
+          <li><span class="sw" style="background:rgba(92,205,191,0.24)" aria-hidden="true"></span><div><h3>Với nhà trường, bạn bè</h3><p>Làm bài đúng hạn, chấp hành nội quy, giúp đỡ bạn bè.</p></div></li>
+          <li><span class="sw" style="background:rgba(92,205,191,0.12)" aria-hidden="true"></span><div><h3>Với cộng đồng</h3><p>Giữ gìn vệ sinh chung, bảo vệ môi trường, chấp hành pháp luật.</p></div></li>
+        </ul>
+        <svg class="rings" viewBox="0 0 400 400" role="img" aria-label="Bốn vòng tròn đồng tâm: bản thân ở giữa, mở rộng ra gia đình, nhà trường và cộng đồng">
+          <circle cx="200" cy="200" r="194" fill="#5CCDBF" fill-opacity="0.10" stroke="#5CCDBF" stroke-opacity="0.5"/>
+          <circle cx="200" cy="200" r="152" fill="#5CCDBF" fill-opacity="0.14" stroke="#5CCDBF" stroke-opacity="0.5"/>
+          <circle cx="200" cy="200" r="108" fill="#5CCDBF" fill-opacity="0.22" stroke="#5CCDBF" stroke-opacity="0.5"/>
+          <circle cx="200" cy="200" r="62" fill="#F2A541" stroke="#F2A541"/>
+          <text x="200" y="33">Cộng đồng</text>
+          <text x="200" y="75">Nhà trường</text>
+          <text x="200" y="120">Gia đình</text>
+          <text x="200" y="206" class="c">Bản thân</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene alt" data-name="Sáu việc làm">
+    <div class="wrap">
+      <p class="eyebrow">Nhận biết qua hành động</p>
+      <h2>Sáu việc làm của người có trách nhiệm</h2>
+      <div class="cards">
+        <div class="card"><h3>Hoàn thành nhiệm vụ</h3><p>Làm đúng hạn, đúng yêu cầu, không đùn đẩy cho người khác.</p></div>
+        <div class="card"><h3>Giữ lời hứa</h3><p>Đã nói là làm, không bỏ dở giữa chừng.</p></div>
+        <div class="card"><h3>Dám nhận lỗi</h3><p>Thừa nhận sai sót và tìm cách sửa chữa.</p></div>
+        <div class="card"><h3>Chủ động</h3><p>Thấy việc cần làm thì làm, không chờ nhắc nhở.</p></div>
+        <div class="card"><h3>Tôn trọng quy định</h3><p>Chấp hành nội quy lớp, nội quy trường và pháp luật.</p></div>
+        <div class="card"><h3>Nghĩ trước khi làm</h3><p>Cân nhắc hậu quả của lời nói và hành động.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-name="Tình huống">
+    <div class="wrap">
+      <p class="eyebrow">Tình huống minh họa</p>
+      <h2>Hai cách ứng xử trước cùng một tình huống</h2>
+      <div class="cases">
+        <div class="case">
+          <div class="sit"><span class="tag">Tình huống</span><p>Làm vỡ kính cửa sổ lớp khi nô đùa</p></div>
+          <div class="good"><span class="tag">Người có trách nhiệm</span><p>Báo ngay với cô giáo, xin lỗi và cùng các bạn khắc phục.</p></div>
+          <div class="bad"><span class="tag">Người thiếu trách nhiệm</span><p>Giả vờ không biết, để bạn khác bị nghi oan.</p></div>
+        </div>
+        <div class="case">
+          <div class="sit"><span class="tag">Tình huống</span><p>Được phân công trực nhật</p></div>
+          <div class="good"><span class="tag">Người có trách nhiệm</span><p>Làm đủ, đúng giờ rồi mới ra về.</p></div>
+          <div class="bad"><span class="tag">Người thiếu trách nhiệm</span><p>Bỏ về sớm hoặc nhờ bạn làm thay.</p></div>
+        </div>
+        <div class="case">
+          <div class="sit"><span class="tag">Tình huống</span><p>Nhóm có bài thuyết trình chung</p></div>
+          <div class="good"><span class="tag">Người có trách nhiệm</span><p>Chuẩn bị phần mình đầy đủ, hỗ trợ bạn khi cần.</p></div>
+          <div class="bad"><span class="tag">Người thiếu trách nhiệm</span><p>Sát giờ mới làm, đổ lỗi khi kết quả chưa tốt.</p></div>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:1.5rem;font-size:1rem">Cùng một tình huống, lựa chọn của mỗi người cho thấy mức độ trách nhiệm.</p>
+    </div>
+  </section>
+
+  <section class="scene alt" data-name="Ý nghĩa">
+    <div class="wrap">
+      <p class="eyebrow">Ý nghĩa</p>
+      <h2>Vì sao cần sống có trách nhiệm?</h2>
+      <div class="why">
+        <div><h3>Được tin tưởng</h3><p>Thầy cô, bạn bè và gia đình sẵn sàng giao việc quan trọng cho bạn.</p></div>
+        <div><h3>Trưởng thành hơn</h3><p>Học từ sai lầm, rèn tính tự lập và bản lĩnh.</p></div>
+        <div><h3>Xã hội tốt đẹp hơn</h3><p>Mỗi người làm tròn vai trò, cộng đồng cùng tiến bộ.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene hot" data-name="Thông điệp">
+    <div class="wrap">
+      <p class="eyebrow">Thông điệp</p>
+      <h2 class="stmt">Trách nhiệm bắt đầu từ những việc nhỏ nhất.</h2>
+      <p class="stmt-sub">Mỗi lần làm tròn một việc nhỏ, ta đang rèn luyện bản thân.</p>
+    </div>
+  </section>
+
+  <section class="scene" data-name="Tự kiểm tra">
+    <div class="wrap">
+      <p class="eyebrow">Tự đánh giá</p>
+      <h2>Tự kiểm tra bản thân</h2>
+      <ul class="checks">
+        <li><label class="check" for="q1"><input type="checkbox" id="q1">Mình có hoàn thành bài tập và việc nhà đúng hạn không?</label></li>
+        <li><label class="check" for="q2"><input type="checkbox" id="q2">Mình có giữ lời hứa với người khác không?</label></li>
+        <li><label class="check" for="q3"><input type="checkbox" id="q3">Khi làm sai, mình có dám nhận lỗi và sửa chữa không?</label></li>
+        <li><label class="check" for="q4"><input type="checkbox" id="q4">Mình có chủ động giúp đỡ người khác mà không chờ nhắc nhở không?</label></li>
+        <li><label class="check" for="q5"><input type="checkbox" id="q5">Mình có nghĩ đến hậu quả trước khi nói hoặc làm không?</label></li>
+      </ul>
+      <div class="meter" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+      <p class="status" id="status" aria-live="polite">Chưa tích câu nào. Hãy tích những câu bạn trả lời “có”.</p>
+    </div>
+  </section>
+
+  <section class="scene alt" data-name="Kết luận">
+    <div class="wrap">
+      <p class="eyebrow">Kết luận</p>
+      <p class="lead">Người có trách nhiệm biết tự giác, giữ lời hứa, dám nhận lỗi và luôn nghĩ đến hậu quả việc mình làm.</p>
+      <h2 class="end-title">Cảm ơn thầy cô và các bạn đã lắng nghe!</h2>
+      <div class="ask">
+        <p class="eyebrow">Câu hỏi thảo luận</p>
+        <p>Em sẽ làm gì ngay hôm nay để sống có trách nhiệm hơn?</p>
+      </div>
+      <button class="btn" type="button" id="top">Lên đầu trang</button>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var scenes = Array.prototype.slice.call(document.querySelectorAll('.scene'));
+  var bar = document.getElementById('bar');
+  var cnt = document.getElementById('count');
+  var nm = document.getElementById('name');
+  var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var queued = false;
+  var shown = -1;
+
+  function clamp(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
+
+  function reset() {
+    scenes.forEach(function (s) {
+      var w = s.firstElementChild;
+      w.style.opacity = '';
+      w.style.transform = '';
+      w.style.filter = '';
+    });
+  }
+
+  function frame() {
+    queued = false;
+    var doc = document.documentElement;
+    var vh = window.innerHeight || doc.clientHeight;
+    var max = Math.max(1, doc.scrollHeight - vh);
+    var y = window.pageYOffset || doc.scrollTop || 0;
+    bar.style.transform = 'scaleX(' + clamp(y / max).toFixed(4) + ')';
+    var cur = 0;
+    for (var i = 0; i < scenes.length; i++) {
+      var s = scenes[i];
+      var r = s.getBoundingClientRect();
+      if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) { cur = i; }
+      if (mq.matches) { continue; }
+      if (r.bottom <= 0 || r.top >= vh) { continue; }
+      var w = s.firstElementChild;
+      var out = clamp(1 - r.bottom / (vh * 0.55));
+      var inn = clamp((vh - r.top) / (vh * 0.4));
+      var ty = (1 - inn) * 40 - out * 50;
+      w.style.opacity = ((0.35 + 0.65 * inn) * (1 - out)).toFixed(3);
+      w.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0) scale(' + (1 - out * 0.08).toFixed(3) + ')';
+      w.style.filter = out > 0.01 ? 'blur(' + (out * 14).toFixed(1) + 'px)' : 'none';
+    }
+    if (cur !== shown) {
+      shown = cur;
+      cnt.textContent = (cur + 1) + '/' + scenes.length;
+      nm.textContent = scenes[cur].getAttribute('data-name');
+    }
+  }
+
+  function queue() {
+    if (!queued) { queued = true; window.requestAnimationFrame(frame); }
+  }
+
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  if (mq.addEventListener) {
+    mq.addEventListener('change', function () { reset(); queue(); });
+  }
+  frame();
+
+  document.getElementById('top').addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: mq.matches ? 'auto' : 'smooth' });
+  });
+
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.check input'));
+  var segs = Array.prototype.slice.call(document.querySelectorAll('.meter span'));
+  var status = document.getElementById('status');
+  function updateChecks() {
+    var n = boxes.filter(function (b) { return b.checked; }).length;
+    segs.forEach(function (sg, i) { sg.classList.toggle('on', i < n); });
+    if (n === 0) {
+      status.textContent = 'Chưa tích câu nào. Hãy tích những câu bạn trả lời “có”.';
+    } else if (n < boxes.length) {
+      status.textContent = 'Đã tích ' + n + '/5 câu. Những câu chưa tích là việc bạn có thể rèn luyện thêm.';
+    } else {
+      status.textContent = 'Đã tích 5/5 câu. Hãy giữ vững thói quen này mỗi ngày.';
+    }
+  }
+  boxes.forEach(function (b) { b.addEventListener('change', updateChecks); });
+})();
+</script>
+
+</body></html>
